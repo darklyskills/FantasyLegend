@@ -15,11 +15,10 @@ int main() {
   int swordDamage = rand() % 10 + 3;
   int axeDamage = rand() % 14 + 1;
   int hammerDamage = rand() % 10 + 5;
-  int daggerDamage = (rand() % 8 + 2) * 2;
+  int daggerDamage = ((rand() % 5) + 2) * 2;
   int knifeDamage = 5;
   int healthPotion = rand() % 5;
   int leatherArmor = rand() % 2;
-  int ironArmor = rand() % 5 + 1;
   const int MAX_ITEMS = 5;
   string inventory[MAX_ITEMS];
   int numItems = 0;
@@ -47,7 +46,7 @@ int main() {
     break;
   case 4:
     cout
-        << "\nYou obtained Daggers\nbase damage: (2 + random damage : ~ 8) * 2";
+        << "\nYou obtained Daggers\nbase damage: (2 + random damage : ~ 5) * 2";
     break;
   default:
     cout << "\nAdventure those weapons are not available to you...";
@@ -93,8 +92,8 @@ int main() {
   }
   cout << "\nYour HP is " << maxHP;
   cout << "\nHere one more gift.";
-  inventory[numItems++] = "leaser Health Potion";
-  inventory[numItems++] = "leaser Health Potion";
+  inventory[numItems++] = "lesser Health Potion";
+  inventory[numItems++] = "lesser Health Potion";
   cout << "\nTwo of them to make sure you live";
   cout << "\n\nYour inventory:\n";
   for (int i = 0; i < numItems; ++i) {
@@ -113,7 +112,7 @@ int main() {
   cout << "\nYou have begun your adventure and have stumple upon a wild boar.";
   do {
   combat:
-    cout << "\n1 to attack the boar,or 2 for inventory";
+    cout << "\n1 to attack the boar, or 2 for inventory";
     cout << "\nMove: ";
     cin >> combat;
     if (combat == 1) {
@@ -143,7 +142,7 @@ int main() {
           currentHP = 20;
           }
         cout << "\nYour HP is " << maxHP;
-        inventory[numItems--] = "leaser Health Potion";
+        inventory[numItems--] = "lesser Health Potion";
         cout << "\nYou have used a potion";
         goto combat;
       }
@@ -152,9 +151,109 @@ int main() {
       }
     }
   }
-while (boarHPHit > 0)
-  ;
+while (boarHPHit > 0);
   cout << "\nYou have successfully killed the boar!";
+  cout << "\nYour intense battle has alerted a goblin nearby.";
+  int goblinHPHit = 25;
+  int goblinHP;
+  int goblinDamage = (rand() % 5) + 5;
+  int combat2;
+  do {
+  combat2:
+    cout << "\n1 to attack the goblin, or 2 for inventory";
+    cout << "\nMove: ";
+    cin >> combat2;
+    if (combat2 == 1) {
+      goblinHPHit = goblinHP - choice;
+      goblinHP = goblinHPHit;
+      cout << "The goblin has " << goblinHPHit << " HP left";
+      if (goblinHPHit < 0){
+        break;
+      }
+      maxHP = (currentHP + leatherArmor) - goblinDamage;
+      cout << "\nThe goblin attack you back.";
+      cout << "\nYou have " << maxHP << " HP left.";
+    if (maxHP < 0) {
+    cout << "\nYou have died";
+    return 0;
+      }
+    }
+    if (combat2 == 2) {
+      for (int i = 0; i < numItems; ++i) {
+        cout << inventory[i] << endl;
+      }
+      cout << "\nWould you like to use a health potion? 1 = Y/2 = N \n";
+      cin >> potion;
+      if (potion == 1) {
+        inventory[numItems--] = "Lesser Health Potion";
+        currentHP = currentHP + healthPotion;
+          if (currentHP > 20){
+          currentHP = 20;
+          }
+        cout << "\nYour HP is " << maxHP;
+        cout << "\nYou have used a potion";
+        goto combat2;
+      }
+      if (potion == 2) {
+        goto combat2;
+      }
+    }
+  }
+  while(goblinHPHit > 0);
+  cout << "\nYou have slain the goblin!";
+  cout << "\nYou have looted a lesser Health Potion off of it.";
+  inventory[numItems++] = "Lesser Health Potion";
+  cout << "\nAn enormous Dragon emerge from the horizon and has spotted you has as it's next meal.";
+  int dragonHPHit = 500;
+  int dragonHP;
+  int dragonDamage = (rand() % 100) + 50;
+  int combat3;
+  do {
+  combat3:
+    cout << "\n1 to attack the dragon, or 2 for inventory";
+    cout << "\nMove: ";
+    cin >> combat3;
+    if (combat3 == 1) {
+      goblinHPHit = dragonHP - choice;
+      goblinHP = goblinHPHit;
+      cout << "The dragon has " << dragonHPHit << " HP left";
+      if (dragonHPHit < 0){
+        break;
+      }
+      maxHP = (currentHP + leatherArmor) - dragonDamage;
+      cout << "\nThe dragon attack you back.";
+      cout << "\nYou have " << maxHP << " HP left.";
+    if (maxHP < 0) {
+    cout << "\nYou have died";
+    cout << "\nThanks for playing my game.";
+    return 0;
+      }
+    }
+    if (combat2 == 2) {
+      for (int i = 0; i < numItems; ++i) {
+        cout << inventory[i] << endl;
+      }
+      cout << "\nWould you like to use a health potion? 1 = Y/2 = N \n";
+      cin >> potion;
+      if (potion == 1) {
+        inventory[numItems--] = "Lesser Health Potion";
+        currentHP = currentHP + healthPotion;
+          if (currentHP > 20){
+          currentHP = 20;
+          }
+        cout << "\nYour HP is " << maxHP;
+        cout << "\nYou have used a potion";
+        goto combat3;
+      }
+      if (potion == 2) {
+        goto combat3;
+      }
+    }
+  }
+  while(dragonHPHit > 0);
+  cout << "\nYou have slain the Dragon!";
+  cout << "\nI don't know how you did it but, hey you did.";
+  cout << "\nThanks for playing my game.";
   if (maxHP < 0) {
     cout << "\nYou have died";
     return 0;
