@@ -5,13 +5,13 @@
 
 using namespace std;
 
-int main() {
+int main() {                //defining variables
   string playerName;
   int maxHP = 20;
   int currentHP;
   int takeDamage;
   int healHP;
-  srand(static_cast<unsigned int>(time(0)));
+  srand(static_cast<unsigned int>(time(0))); //number generator
   int swordDamage = rand() % 10 + 3;
   int axeDamage = rand() % 14 + 1;
   int hammerDamage = rand() % 10 + 5;
@@ -22,8 +22,8 @@ int main() {
   const int MAX_ITEMS = 5;
   string inventory[MAX_ITEMS];
   int numItems = 0;
-  inventory[numItems++] = "Leather Armor";
-
+  inventory[numItems++] = "Leather Armor"; //add the item to the inventory
+//The user is able to choose what they want from these option.
   cout << "Choose your weapon adventurer.\n";
   cout << "1 - Sword\n";
   cout << "2 - Axe\n";
@@ -33,7 +33,7 @@ int main() {
   int choice;
   cout << "Weapon: ";
   cin >> choice;
-
+//whatever number they chose would define their weapon.
   switch (choice) {
   case 1:
     cout << "\nYou obtained Sword\nbase damage: 3 + random damage : ~ 10";
@@ -51,6 +51,7 @@ int main() {
   default:
     cout << "\nAdventure those weapons are not available to you...";
   }
+  //This portion would test weapon and the numbers displayed above. 
   cout << "\n \nNow to test your new weapon adventurer.";
   if (choice == 1) {
     cout << "\nSword did " << swordDamage << " damage.";
@@ -76,17 +77,18 @@ int main() {
   for (int i = 0; i < numItems; ++i) {
     cout << inventory[i] << endl;
   }
-
-  currentHP = maxHP;
+  //This demonstates how your armor and health potions work.
 
   cout << "\nYou are already wearing your leather armor.";
   cout << "\nTo test your armor, I'm going to hit you.";
+  cout << "\nThis knife should do 5 damage to you";
   cout << "\nYour armor is will block: ~ 2 damage";
-  maxHP = currentHP - (knifeDamage - leatherArmor);
+  maxHP = maxHP - (knifeDamage - leatherArmor); 
   cout << "\nYour HP is " << maxHP;
   cout << "\nDo not worry I have a lesser health potion for you.";
+  cout << "\nThis potion would heal you for ~ 5";
   cout << "\nYou drink the potion.";
-  maxHP = currentHP + healthPotion;
+  maxHP = maxHP + healthPotion;
   if (maxHP > 20){
     maxHP = 20;
   }
@@ -109,37 +111,38 @@ int main() {
   int boarHP = 15;
   int boarHPHit;
   int boarDamage = rand() % 2 + 3;
+  //This is where the real fun begins.
   cout << "\nYou have begun your adventure and have stumple upon a wild boar.";
   do {
-  combat:
+  combat:           //This is sort of a checkpoint for the loop to come back.
     cout << "\n1 to attack the boar, or 2 for inventory";
     cout << "\nMove: ";
     cin >> combat;
     if (combat == 1) {
-      boarHPHit = boarHP - choice;
+      boarHPHit = boarHP - choice; //you doing damage to the enemy.
       boarHP = boarHPHit;
       cout << "The boar has " << boarHPHit << " HP left";
       if (boarHPHit < 0){
         break;
       }
-      maxHP = (currentHP + leatherArmor) - boarDamage;
+      maxHP = (maxHP + leatherArmor) - boarDamage; //the enemy doing damage to you.
       cout << "\nThe boar attack you back.";
       cout << "\nYou have " << maxHP << " HP left.";
-    if (maxHP < 0) {
+    if (maxHP < 0) { //if hp is 0 or lower you died.
     cout << "\nYou have died";
     return 0;
       }
     }
-    if (combat == 2) {
-      for (int i = 0; i < numItems; ++i) {
+    if (combat == 2) { 
+      for (int i = 0; i < numItems; ++i) { //show the inventory
         cout << inventory[i] << endl;
       }
       cout << "\nWould you like to use a health potion? 1 = Y/2 = N \n";
       cin >> potion;
       if (potion == 1) {
-        currentHP = currentHP + healthPotion;
-          if (currentHP > 20){
-          currentHP = 20;
+        maxHP = maxHP + healthPotion;
+          if (maxHP > 20){
+          maxHP = 20;
           }
         cout << "\nYour HP is " << maxHP;
         inventory[numItems--] = "lesser Health Potion";
@@ -170,7 +173,7 @@ while (boarHPHit > 0);
       if (goblinHPHit < 0){
         break;
       }
-      maxHP = (currentHP + leatherArmor) - goblinDamage;
+      maxHP = (maxHP + leatherArmor) - goblinDamage;
       cout << "\nThe goblin attack you back.";
       cout << "\nYou have " << maxHP << " HP left.";
     if (maxHP < 0) {
@@ -186,9 +189,9 @@ while (boarHPHit > 0);
       cin >> potion;
       if (potion == 1) {
         inventory[numItems--] = "Lesser Health Potion";
-        currentHP = currentHP + healthPotion;
-          if (currentHP > 20){
-          currentHP = 20;
+        maxHP = maxHP + healthPotion;
+          if (maxHP > 20){
+          maxHP = 20;
           }
         cout << "\nYour HP is " << maxHP;
         cout << "\nYou have used a potion";
@@ -201,8 +204,11 @@ while (boarHPHit > 0);
   }
   while(goblinHPHit > 0);
   cout << "\nYou have slain the goblin!";
-  cout << "\nYou have looted a lesser Health Potion off of it.";
+  cout << "\nYou have looted a lesser Health Potion off of it.\n";
   inventory[numItems++] = "Lesser Health Potion";
+  for (int i = 0; i < numItems; ++i) {
+  cout << inventory[i] << endl;
+  }
   cout << "\nAn enormous Dragon emerge from the horizon and has spotted you has as it's next meal.";
   int dragonHPHit = 500;
   int dragonHP;
@@ -220,12 +226,12 @@ while (boarHPHit > 0);
       if (dragonHPHit < 0){
         break;
       }
-      maxHP = (currentHP + leatherArmor) - dragonDamage;
+      maxHP = (maxHP + leatherArmor) - dragonDamage;
       cout << "\nThe dragon attack you back.";
       cout << "\nYou have " << maxHP << " HP left.";
     if (maxHP < 0) {
     cout << "\nYou have died";
-    cout << "\nThanks for playing my game.";
+    cout << "\nThanks for playing my game."; //Game over text
     return 0;
       }
     }
@@ -237,9 +243,9 @@ while (boarHPHit > 0);
       cin >> potion;
       if (potion == 1) {
         inventory[numItems--] = "Lesser Health Potion";
-        currentHP = currentHP + healthPotion;
-          if (currentHP > 20){
-          currentHP = 20;
+        maxHP = maxHP + healthPotion;
+          if (maxHP > 20){
+          maxHP = 20;
           }
         cout << "\nYour HP is " << maxHP;
         cout << "\nYou have used a potion";
@@ -253,10 +259,7 @@ while (boarHPHit > 0);
   while(dragonHPHit > 0);
   cout << "\nYou have slain the Dragon!";
   cout << "\nI don't know how you did it but, hey you did.";
-  cout << "\nThanks for playing my game.";
-  if (maxHP < 0) {
-    cout << "\nYou have died";
-    return 0;
-  }
+  cout << "\nThanks for playing my game."; //This is where the Congratulations text shows.
+
   return 0;
 }
